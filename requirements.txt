@@ -1,3 +1,4 @@
 django
 django-restframework
 python-decouple
+django-cors-headers
