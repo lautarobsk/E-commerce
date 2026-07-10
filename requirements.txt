@@ -3,3 +3,7 @@ django-restframework
 python-decouple
 django-cors-headers
 Pillow
+react-router-dom 
+react-hot-toast 
+axios 
+react-hook-form
