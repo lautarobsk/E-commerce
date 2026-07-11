@@ -7,7 +7,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProductSerializer(serializers.ModelSerializer):
-    # Esto es para que frontend reciba el nombre de la categoría en lugar de solo el id
+    # Para que el frontend reciba el nombre de la categoría en lugar de solo el id
     category_name = serializers.CharField(source='category.name', read_only=True)
 
     class Meta:

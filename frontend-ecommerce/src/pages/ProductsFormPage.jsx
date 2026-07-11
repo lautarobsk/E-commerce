@@ -48,7 +48,6 @@ export function ProductsFormPage() {
         />
         {errors.stock && <span>El stock es obligatorio</span>}
 
-        {/* El ID de la categoría debería venir de un select o input */}
         <input
           type="number"
           placeholder="ID Categoría"
