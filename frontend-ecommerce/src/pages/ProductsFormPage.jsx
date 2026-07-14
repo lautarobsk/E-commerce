@@ -1,5 +1,11 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { createProduct, deleteProduct } from "../api/products.api";
+import {
+  createProduct,
+  deleteProduct,
+  updateProduct,
+  getProduct,
+} from "../api/products.api";
 import { useNavigate, useParams } from "react-router-dom";
 
 export function ProductsFormPage() {
@@ -7,15 +13,34 @@ export function ProductsFormPage() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm();
 
   const navigate = useNavigate();
   const params = useParams();
 
   const onSubmit = handleSubmit(async (data) => {
-    const res = await createProduct(data);
-    navigate("/productos");
+    if (params.id) {
+      await updateProduct(params.id, data);
+    } else {
+      await createProduct(data)
+    }
+    navigate('/productos')
   });
+
+  useEffect(() => {
+    async function loadProduct() {
+      if (params.id) {
+        const res = await getProduct(params.id);
+        setValue('category', res.data.category)
+        setValue('name', res.data.name)
+        setValue('description', res.data.description)
+        setValue('price', res.data.price)
+        setValue('stock', res.data.stock)
+      }
+    }
+    loadProduct();
+  }, []);
 
   return (
     <div>
@@ -58,13 +83,21 @@ export function ProductsFormPage() {
         <button type="submit">Guardar</button>
       </form>
 
-      {params.id && <button onClick={async () => {
-        const respuesta = window.confirm('Estas seguro que quieres eliminar?')
-        if (respuesta){
-          await deleteProduct(params.id)
-          navigate('/productos')
-        }
-      }}>Borrar</button>}
+      {params.id && (
+        <button
+          onClick={async () => {
+            const respuesta = window.confirm(
+              "Estas seguro que quieres eliminar?",
+            );
+            if (respuesta) {
+              await deleteProduct(params.id);
+              navigate("/productos");
+            }
+          }}
+        >
+          Borrar
+        </button>
+      )}
     </div>
   );
 }

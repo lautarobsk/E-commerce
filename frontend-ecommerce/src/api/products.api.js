@@ -14,4 +14,8 @@ export const createProduct = (product) => {
 
 export const deleteProduct = (id) => productApi.delete(`/${id}/`);
 
+export const updateProduct = (id, product) => productApi.put(`/${id}/`, product);
 
+export const getProduct = (id) => {
+  return productApi.get(`/${id}/`)
+}
