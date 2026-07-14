@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
-import { createProduct } from "../api/products.api"
-import {useNavigate } from 'react-router-dom'
-
+import { createProduct, deleteProduct } from "../api/products.api";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function ProductsFormPage() {
   const {
@@ -9,12 +8,13 @@ export function ProductsFormPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
+  const params = useParams();
 
   const onSubmit = handleSubmit(async (data) => {
-    const res = await createProduct(data)
-    navigate('/productos')
+    const res = await createProduct(data);
+    navigate("/productos");
   });
 
   return (
@@ -57,6 +57,14 @@ export function ProductsFormPage() {
 
         <button type="submit">Guardar</button>
       </form>
+
+      {params.id && <button onClick={async () => {
+        const respuesta = window.confirm('Estas seguro que quieres eliminar?')
+        if (respuesta){
+          await deleteProduct(params.id)
+          navigate('/productos')
+        }
+      }}>Borrar</button>}
     </div>
   );
 }

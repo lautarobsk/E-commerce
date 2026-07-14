@@ -11,3 +11,7 @@ export const getAllProducts = () => {
 export const createProduct = (product) => {
   return productApi.post("/", product);
 };
+
+export const deleteProduct = (id) => productApi.delete(`/${id}/`);
+
+

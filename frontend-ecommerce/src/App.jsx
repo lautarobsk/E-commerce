@@ -11,6 +11,7 @@ function App() {
         <Route path="/" element={<Navigate to="/productos" />} />
         <Route path="/productos" element={<ProductsPage />} />
         <Route path="/productos-form" element={<ProductsFormPage />} />
+        <Route path="/productos/:id" element={<ProductsFormPage />} />
       </Routes>
     </BrowserRouter>
   );
